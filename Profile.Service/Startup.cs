@@ -5,13 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.Swagger;
+
 namespace Profile.Service
 
 {
     public class Startup
     {
-        private const string url = "swagger";
-        private const string apiName = "Profile Service";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,11 +24,11 @@ namespace Profile.Service
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
-                    version = "v1",
-                    title = "MyAPI",
-                    description = "Testing"  
+                    Version = "v1",
+                    Title = "MyAPI",
+                    Description = "Testing"  
                 });
             });
         }
@@ -45,7 +44,7 @@ namespace Profile.Service
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(url, apiName);
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyProfileApi");
             });
             app.UseHttpsRedirection();
 
