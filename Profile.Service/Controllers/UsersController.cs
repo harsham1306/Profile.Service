@@ -8,22 +8,33 @@ using Microsoft.Extensions.Logging;
 namespace Profile.Service.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    // [Route("[controller]")]
+    public class UsersController : ControllerBase
     {
+        private static List<User> resultList = new List<User>()
+         {
+            new User() { Id = "1", FirstName = "Bill", LastName = "Smith" },
+            new User() { Id = "2", FirstName = "Bill", LastName = "Smith" },
+            new User() { Id = "3", FirstName = "Bill", LastName = "Smith" },
+            new User() { Id = "4", FirstName = "Bill", LastName = "Smith" }
+         };
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<UsersController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly UsersService _usersService;
+
+        public UsersController(ILogger<UsersController> logger)
         {
             _logger = logger;
+            // _usersService = usersService;
         }
 
         [HttpGet]
+        [Route("api/WeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
@@ -35,5 +46,15 @@ namespace Profile.Service.Controllers
             })
             .ToArray();
         }
+
+
+        [HttpGet]
+        [Route("api/Users")]
+
+        public List<User> GetUsersList()
+        {
+            return resultList;
+        }
+
     }
 }
