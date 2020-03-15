@@ -1,25 +1,22 @@
 
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 public interface IUsersService 
 {
     List<User> GetUsersList();
 }
 
-
-
 public class UsersService : IUsersService
 {
-    List<User> resultList = new List<User>()
-    {
-        new User() { Id = "1", FirstName = "Bill", LastName = "Smith" },
-        new User() { Id = "2", FirstName = "Bill", LastName = "Smith" },
-        new User() { Id = "3", FirstName = "Bill", LastName = "Smith" },
-        new User() { Id = "4", FirstName = "Bill", LastName = "Smith" }
-    };
+    private readonly IUsersRepository _userRepository;
 
+    public UsersService(IUsersRepository usersRepository)
+    {
+        _userRepository = usersRepository;
+    }
     public List<User> GetUsersList()
     {
-       return resultList;
+       return _userRepository.GetListofUsers();
     }
 }

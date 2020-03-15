@@ -23,6 +23,7 @@ namespace Profile.Service
         {
             services.AddControllers();
             services.AddSingleton<IUsersService, UsersService>();
+            services.AddSingleton<IUsersRepository, UsersRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

@@ -11,13 +11,6 @@ namespace Profile.Service.Controllers
     // [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private static List<User> resultList = new List<User>()
-         {
-            new User() { Id = "1", FirstName = "Bill", LastName = "Smith" },
-            new User() { Id = "2", FirstName = "Bill", LastName = "Smith" },
-            new User() { Id = "3", FirstName = "Bill", LastName = "Smith" },
-            new User() { Id = "4", FirstName = "Bill", LastName = "Smith" }
-         };
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -25,12 +18,11 @@ namespace Profile.Service.Controllers
 
         private readonly ILogger<UsersController> _logger;
 
-        private readonly UsersService _usersService;
-
-        public UsersController(ILogger<UsersController> logger)
+        private IUsersService _usersService;
+        public UsersController(ILogger<UsersController> logger, IUsersService usersService)
         {
             _logger = logger;
-            // _usersService = usersService;
+            _usersService = usersService;
         }
 
         [HttpGet]
@@ -53,7 +45,7 @@ namespace Profile.Service.Controllers
 
         public List<User> GetUsersList()
         {
-            return resultList;
+            return _usersService.GetUsersList();
         }
 
     }
