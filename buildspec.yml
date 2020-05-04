@@ -1,0 +1,33 @@
+---
+version: 0.2
+env:
+  variables:
+    ProjectPath: "./Profile.Service"
+    ProjectFilePath: "./Profile.Service/Profile.Service.csproj"
+    Configuration: "Release"
+    PublishDir: "Publish_Output"
+phases:
+    install:
+      runtime-versions:
+        docker: 18
+    pre_build:
+      commands:
+        - echo Restore started on `date`
+        - dotnet restore $ProjectFilePath
+    build:
+      commands:
+        - echo Build started on `date`
+        - SHA=$(git rev-parse --short HEAD)
+        - VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" $ProjectFilePath)
+        - dotnet publish $ProjectFilePath -c $Configuration -o ./$PublishDir
+        - ImageRepoName=${CODEBUILD_BUILD_ID%:*}
+        - echo "$AwsAccountId.dkr.ecr.$AWS_REGION.amazonaws.com/$ImageRepoName:$VERSION-$SHA"
+        - docker build $ProjectPath -f $ProjectPath/Dockerfile -t $AwsAccountId.dkr.ecr.$AWS_REGION.amazonaws.com/$ImageRepoName:$VERSION-$SHA
+        - docker push $AwsAccountId.dkr.ecr.$AWS_REGION.amazonaws.com/$ImageRepoName:$VERSION-$SHA
+        - docker build $TestProjectPath -f $TestProjectPath/Dockerfile.test -t $AwsAccountId.dkr.ecr.$AWS_REGION.amazonaws.com/$ImageRepoName-integration:$VERSION-$SHA
+        - docker push $AwsAccountId.dkr.ecr.$AWS_REGION.amazonaws.com/$ImageRepoName-integration:$VERSION-$SHA
+        - echo Build completed on `date`
+
+    post_build:
+        commands:
+            - echo Build completed on `date`
