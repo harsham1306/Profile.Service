@@ -4,8 +4,6 @@ env:
   variables:
     ProjectPath: "./Profile.Service"
     ProjectFilePath: "./Profile.Service/Profile.Service.csproj"
-    Configuration: "Release"
-    PublishDir: "Publish_Output"
 phases:
     install:
       runtime-versions:
@@ -22,11 +20,7 @@ phases:
         - echo Build started on `date`
         - SHA=$(git rev-parse --short HEAD)
         - VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" $ProjectFilePath)
-        - dotnet publish $ProjectFilePath -c $Configuration -o ./$PublishDir
-        - ls
-        - cd $PublishDir
-        - ls
-        - cd ..
+        - dotnet publish -c Release
         - ImageRepoName=${CODEBUILD_BUILD_ID%:*}
         - docker build $ProjectPath -f $ProjectPath/Dockerfile -t $REPOSITORY_URI/$ImageRepoName:$VERSION-$SHA
         - docker push $REPOSITORY_URI:$VERSION-$SHA
