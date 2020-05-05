@@ -27,7 +27,3 @@ phases:
         - docker build $ProjectPath -f $ProjectPath/Dockerfile -t $REPOSITORY_URI/$ImageRepoName:$VERSION-$SHA
         - docker push $REPOSITORY_URI:$VERSION-$SHA
         - echo Build completed on `date`
-
-    post_build:
-        commands
-            - echo Build completed on `date`
