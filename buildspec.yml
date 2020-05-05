@@ -14,7 +14,7 @@ phases:
         - echo Restore started on `date`
         - dotnet restore $ProjectFilePath
         - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-        - REPOSITORY_URI=829274941445.dkr.ecr.us-east-1.amazonaws.com/profile-svc
+        - REPOSITORY_URI=829274941445.dkr.ecr.us-east-1.amazonaws.com
     build:
       commands:
         - echo Build started on `date`
