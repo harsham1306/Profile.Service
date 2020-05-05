@@ -22,7 +22,11 @@ phases:
         - echo Build started on `date`
         - SHA=$(git rev-parse --short HEAD)
         - VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" $ProjectFilePath)
+        - pwd
         - dotnet publish $ProjectFilePath -c $Configuration -o ./$PublishDir
+        - pwd 
+        - cd $Publish_Output
+        - ls
         - ImageRepoName=${CODEBUILD_BUILD_ID%:*}
         - docker build $ProjectPath -f $ProjectPath/Dockerfile -t $REPOSITORY_URI/$ImageRepoName:$VERSION-$SHA
         - docker push $REPOSITORY_URI:$VERSION-$SHA
