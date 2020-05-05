@@ -1,7 +1,16 @@
 FROM mcr.microsoft.com/dotnet/core/runtime:3.0 AS base
 ENV ASPNETCORE_URLS http://*:5050
 EXPOSE 5050
-ADD Publish_Output /app
-WORKDIR /app
+
+
+# ADD Publish_Output /app
+# WORKDIR /app
+
+
+
+COPY bin/Release/netcoreapp3.1/publish/ App/
+WORKDIR /App
+
+
 
 ENTRYPOINT ["dotnet", "Profile.Service.dll"]

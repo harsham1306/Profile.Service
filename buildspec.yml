@@ -23,7 +23,8 @@ phases:
         - SHA=$(git rev-parse --short HEAD)
         - VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" $ProjectFilePath)
         - pwd
-        - dotnet publish $ProjectFilePath -c $Configuration -o ./$PublishDir
+        # - dotnet publish $ProjectFilePath -c $Configuration -o ./$PublishDir
+        - dotnet publish -c Release
         - pwd 
         - cd $PublishDir
         - ls
