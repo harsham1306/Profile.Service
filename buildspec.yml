@@ -27,6 +27,8 @@ phases:
         - pwd 
         - cd $PublishDir
         - ls
+        - cd ..
+        - pwd 
         - ImageRepoName=${CODEBUILD_BUILD_ID%:*}
         - docker build $ProjectPath -f $ProjectPath/Dockerfile -t $REPOSITORY_URI/$ImageRepoName:$VERSION-$SHA
         - docker push $REPOSITORY_URI:$VERSION-$SHA
