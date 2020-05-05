@@ -25,7 +25,7 @@ phases:
         - pwd
         - dotnet publish $ProjectFilePath -c $Configuration -o ./$PublishDir
         - pwd 
-        - cd $Publish_Output
+        - cd $PublishDir
         - ls
         - ImageRepoName=${CODEBUILD_BUILD_ID%:*}
         - docker build $ProjectPath -f $ProjectPath/Dockerfile -t $REPOSITORY_URI/$ImageRepoName:$VERSION-$SHA
