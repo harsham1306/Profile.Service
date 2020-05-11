@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:3.0 AS base
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 ENV ASPNETCORE_URLS http://*:5050
 EXPOSE 5050
 COPY bin/Release/netcoreapp3.0/publish/ App/
